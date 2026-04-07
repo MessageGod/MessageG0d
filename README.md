@@ -1,21 +1,27 @@
 # MessageG0d (MG)
 
-MG is a real-time messaging and community platform spec repository.
+MG is a real-time messaging and community platform.
 
-## GitHub-ready structure
+This repository now includes an implementation-ready backend foundation generated from the product specification.
 
-This repository is organized to work cleanly on GitHub:
+## Repository layout
 
-- `README.md` for project landing information
-- `docs/MG_DEVELOPER_SPEC.md` as the canonical developer specification
-- `.github/pull_request_template.md` for consistent PRs
-- `.github/ISSUE_TEMPLATE/*` for bug and feature issue intake
+- `docs/MG_DEVELOPER_SPEC.md` — canonical product/developer specification
+- `backend/schema.sql` — initial PostgreSQL schema (users, DMs, servers, roles, channels, feature flags)
+- `backend/openapi.yaml` — initial OpenAPI 3.1 contract for key auth/user/server endpoints
+- `backend/src/permissions.ts` — role permission bitmask constants + helper
+- `.github/ISSUE_TEMPLATE/*` — GitHub issue templates
+- `.github/pull_request_template.md` — GitHub PR template
 
-## Primary specification
+## Quick start (backend foundation)
 
-- Canonical spec: [`docs/MG_DEVELOPER_SPEC.md`](docs/MG_DEVELOPER_SPEC.md)
-- Legacy path kept for compatibility: [`MG_DEVELOPER_SPEC.md`](MG_DEVELOPER_SPEC.md)
+1. Review the domain model in `backend/schema.sql`.
+2. Apply schema to PostgreSQL (example):
+   ```bash
+   psql "$DATABASE_URL" -f backend/schema.sql
+   ```
+3. Use `backend/openapi.yaml` as the API contract baseline for service implementation.
 
-## Next implementation milestone
+## Status
 
-A practical next step is generating an initial backend schema and API contracts from the spec (auth, users, DMs, servers, channels, and roles/permissions first).
+This is an initial, spec-aligned foundation. Runtime services, migrations, and WebSocket workers should be implemented next.
