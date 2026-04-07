@@ -1,0 +1,11 @@
+{
+  "name": "messageg0d",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "start": "node backend/src/server.js",
+    "check": "npm --prefix backend run check",
+    "smoke": "bash scripts/smoke.sh"
+  }
+}

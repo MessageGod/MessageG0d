@@ -1,0 +1,48 @@
+openapi: 3.1.0
+info:
+  title: MessageG0d API
+  version: 0.3.0
+  description: Runnable prototype API with broad MG feature coverage.
+servers:
+  - url: http://localhost:3000
+paths:
+  /health: { get: { summary: Health check, responses: { '200': { description: OK } } } }
+  /auth/register: { post: { summary: Register, responses: { '201': { description: Created } } } }
+  /auth/login: { post: { summary: Login, responses: { '200': { description: Token } } } }
+  /auth/forgot-password: { post: { summary: Forgot password, responses: { '200': { description: Reset token } } } }
+  /auth/reset-password: { post: { summary: Reset password, responses: { '200': { description: Password updated } } } }
+  /users/{userId}: { get: { summary: Get profile, responses: { '200': { description: Profile } } } }
+  /users/{userId}/block: { post: { summary: Block user, security: [ { bearerAuth: [] } ], responses: { '200': { description: Blocked } } } }
+  /users/{userId}/report: { post: { summary: Report user, security: [ { bearerAuth: [] } ], responses: { '201': { description: Report created } } } }
+  /dms: { post: { summary: Create DM, security: [ { bearerAuth: [] } ], responses: { '201': { description: DM created } } } }
+  /dms/{dmId}/typing: { post: { summary: Typing indicator, security: [ { bearerAuth: [] } ], responses: { '200': { description: Typing state } } } }
+  /dms/{dmId}/messages: { post: { summary: Send DM message, security: [ { bearerAuth: [] } ], responses: { '201': { description: Message sent } } } }
+  /messages/{messageId}: 
+    patch: { summary: Edit message, security: [ { bearerAuth: [] } ], responses: { '200': { description: Message updated } } }
+    delete: { summary: Delete message, security: [ { bearerAuth: [] } ], responses: { '200': { description: Message deleted } } }
+  /messages/{messageId}/reactions: { post: { summary: Add reaction, security: [ { bearerAuth: [] } ], responses: { '200': { description: Reactions updated } } } }
+  /dms/{dmId}/read: { post: { summary: Read receipt, security: [ { bearerAuth: [] } ], responses: { '200': { description: Message read } } } }
+  /search/messages: { get: { summary: Message full-text search, security: [ { bearerAuth: [] } ], responses: { '200': { description: Search results } } } }
+  /servers: { post: { summary: Create server, security: [ { bearerAuth: [] } ], responses: { '201': { description: Server created } } } }
+  /servers/{serverId}/join: { post: { summary: Join server, security: [ { bearerAuth: [] } ], responses: { '200': { description: Joined } } } }
+  /servers/{serverId}/roles: { post: { summary: Create role, security: [ { bearerAuth: [] } ], responses: { '201': { description: Role created } } } }
+  /servers/{serverId}/channels: { post: { summary: Create channel, security: [ { bearerAuth: [] } ], responses: { '201': { description: Channel created } } } }
+  /servers/{serverId}/teams: { post: { summary: Create team, security: [ { bearerAuth: [] } ], responses: { '201': { description: Team created } } } }
+  /admin/global-ban: { post: { summary: Global ban, security: [ { bearerAuth: [] } ], responses: { '200': { description: Ban applied } } } }
+  /admin/feature-flags: { post: { summary: Feature injection, security: [ { bearerAuth: [] } ], responses: { '201': { description: Feature flag created } } } }
+  /admin/god/{userId}: { post: { summary: Assign GOD, security: [ { bearerAuth: [] } ], responses: { '200': { description: GOD assigned } } } }
+  /admin/midas/{userId}: { post: { summary: Assign MIDAS scope, security: [ { bearerAuth: [] } ], responses: { '200': { description: MIDAS assigned } } } }
+  /admin/audit-logs: { get: { summary: Global audit logs, security: [ { bearerAuth: [] } ], responses: { '200': { description: Logs } } } }
+  /themes/{scope}: { post: { summary: Save theme config, security: [ { bearerAuth: [] } ], responses: { '200': { description: Theme saved } } } }
+  /bots/register: { post: { summary: Register bot app, security: [ { bearerAuth: [] } ], responses: { '201': { description: Bot registered } } } }
+  /economy/grant-xp: { post: { summary: Grant XP, security: [ { bearerAuth: [] } ], responses: { '200': { description: XP granted } } } }
+  /economy/coins: { post: { summary: Update coins, security: [ { bearerAuth: [] } ], responses: { '200': { description: Coins updated } } } }
+  /achievements/unlock: { post: { summary: Unlock achievement, security: [ { bearerAuth: [] } ], responses: { '200': { description: Achievement unlocked } } } }
+  /discovery/servers: { get: { summary: Trending servers, responses: { '200': { description: Discovery list } } } }
+  /feeds/aggregate: { get: { summary: Unified feed, security: [ { bearerAuth: [] } ], responses: { '200': { description: Feed } } } }
+  /moderation/suggest: { post: { summary: AI moderation suggestion, security: [ { bearerAuth: [] } ], responses: { '200': { description: Suggestion result } } } }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
