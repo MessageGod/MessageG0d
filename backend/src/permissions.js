@@ -9,10 +9,8 @@ export const Permissions = {
   KICK_USERS: 1 << 4,
   BAN_USERS: 1 << 5,
   CREATE_INVITES: 1 << 6,
-} as const;
+};
 
-export type Permission = keyof typeof Permissions;
-
-export function hasPermission(bitmask: number, permission: Permission): boolean {
+export function hasPermission(bitmask, permission) {
   return (bitmask & Permissions[permission]) === Permissions[permission];
 }

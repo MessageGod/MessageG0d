@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
   title: MessageG0d API
-  version: 0.1.0
-  description: Initial API contract generated from the MG developer specification.
+  version: 0.2.0
+  description: Initial runnable API contract generated from the MG developer specification.
 servers:
-  - url: https://api.example.com
+  - url: http://localhost:3000
 paths:
   /health:
     get:
@@ -47,16 +47,36 @@ paths:
   /dms:
     post:
       summary: Create a direct message channel
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDmRequest'
       responses:
         '201':
           description: DM created
   /servers:
     post:
       summary: Create server
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServerRequest'
       responses:
         '201':
           description: Server created
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
   parameters:
     UserId:
       name: userId
@@ -87,3 +107,21 @@ components:
           description: Email or username
         password:
           type: string
+    CreateDmRequest:
+      type: object
+      required: [participant_id]
+      properties:
+        participant_id:
+          type: string
+          format: uuid
+    CreateServerRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        visibility:
+          type: string
+          enum: [public, private]
